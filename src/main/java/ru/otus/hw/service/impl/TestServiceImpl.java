@@ -1,11 +1,13 @@
-package ru.otus.hw.service;
+package ru.otus.hw.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import ru.otus.hw.service.StreamsIOService;
+import ru.otus.hw.service.TestService;
 
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
-    private final IOService ioService;
+    private final StreamsIOService ioService;
 
     @Override
     public void executeTest() {
