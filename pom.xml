@@ -15,10 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>6.2.1</spring.version>
         <opencsv.version>5.9</opencsv.version>
-        <junit.version>5.10.2</junit.version>
+        <junit.version>5.11.4</junit.version>
         <mockito.version>5.10.0</mockito.version>
         <assertj.version>3.25.2</assertj.version>
         <lombok.version>1.18.32</lombok.version>
+        <slf4j.version>2.0.16</slf4j.version>
+        <version>5.7.0</version>
         <checkstyle-plugin.version>3.3.1</checkstyle-plugin.version>
         <checkstyle.version>10.15.0</checkstyle.version>
         <checkstyle.config.url>
@@ -73,6 +75,14 @@
             <optional>true</optional>
             <version>${lombok.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+            <version>${mockito.version}</version>
+        </dependency>
+
 
     </dependencies>
 
