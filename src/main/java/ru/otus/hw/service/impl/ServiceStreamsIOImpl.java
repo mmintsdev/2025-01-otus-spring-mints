@@ -4,10 +4,10 @@ import ru.otus.hw.service.StreamsIOService;
 
 import java.io.PrintStream;
 
-public class StreamsIOServiceImpl implements StreamsIOService {
+public class ServiceStreamsIOImpl implements StreamsIOService {
     private final PrintStream printStream;
 
-    public StreamsIOServiceImpl(PrintStream printStream) {
+    public ServiceStreamsIOImpl(PrintStream printStream) {
 
         this.printStream = printStream;
     }

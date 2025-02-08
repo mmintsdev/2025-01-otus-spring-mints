@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.service.StreamsIOService;
-import ru.otus.hw.service.TestService;
+import ru.otus.hw.service.ServiceTest;
 import ru.otus.hw.util.QuestionStringFormatter;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class TestServiceImpl implements TestService {
+public class ServiceTestImpl implements ServiceTest {
 
     private final StreamsIOService ioService;
 

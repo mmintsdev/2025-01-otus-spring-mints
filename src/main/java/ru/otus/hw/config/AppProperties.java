@@ -5,6 +5,6 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class AppProperties implements TestFileNameProvider {
+public class AppProperties implements FileNameTestProvider {
     private String testFileName;
 }

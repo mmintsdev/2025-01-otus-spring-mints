@@ -1,46 +1,66 @@
 package ru.otus.hw.service.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.service.StreamsIOService;
+import ru.otus.hw.util.QuestionStringFormatter;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class TestServiceImplTest {
 
-    @Mock
     private StreamsIOService ioService;
-
-    @Mock
     private QuestionDao questionDao;
+    private ServiceTestImpl testService;
 
-    @InjectMocks
-    private TestServiceImpl testService;
+    @BeforeEach
+    void setUp() {
+        ioService = mock(StreamsIOService.class);
+        questionDao = mock(QuestionDao.class);
+        testService = new ServiceTestImpl(ioService, questionDao);
+    }
 
     @Test
-    void executeTest_ShouldWorkWithoutExceptions() {
-        // Подготовка мока с вопросами
-        List<Question> mockQuestions = List.of(
-                new Question("What is Java?", List.of(new Answer("Programming Language", true))),
-                new Question("What is Spring?", List.of(new Answer("Framework", true)))
-        );
-        when(questionDao.findAll()).thenReturn(mockQuestions);
+    void executeTest_ShouldPrintQuestions_WhenQuestionsAvailable() {
+        List<Question> questions = List.of(new Question("What is Java?", List.of(new Answer("Programming Language", true))));
 
-        // Проверка, что метод выполняется без исключений
-        assertDoesNotThrow(() -> testService.executeTest());
+        when(questionDao.findAll()).thenReturn(questions);
 
-        // Проверка вызовов методов
-        verify(questionDao, times(1)).findAll();
-        verify(ioService, atLeastOnce()).printLine(anyString());
+        testService.executeTest();
+
+        var inOrder = inOrder(ioService);
+
+        inOrder.verify(ioService).printLine(""); // Ожидаемый вызов пустой строки
+        inOrder.verify(ioService).printFormattedLine("Please answer the questions below%n");
+        inOrder.verify(ioService).printLine(QuestionStringFormatter.formatQuestion(questions.get(0)));
+    }
+
+    @Test
+    void executeTest_ShouldPrintNoQuestionsMessage_WhenNoQuestionsAvailable() {
+        when(questionDao.findAll()).thenReturn(List.of());
+
+        testService.executeTest();
+
+        verify(ioService).printLine("No questions available.");
+    }
+
+    @Test
+    void testService_ShouldInitializeCorrectly() {
+        assertNotNull(testService);
+    }
+
+    @Test
+    void executeTest_ShouldHandleNullQuestionsList() {
+        when(questionDao.findAll()).thenReturn(null);
+
+        testService.executeTest();
+
+        verify(ioService).printLine("No questions available.");
     }
 }

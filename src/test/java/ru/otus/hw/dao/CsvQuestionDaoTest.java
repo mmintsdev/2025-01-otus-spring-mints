@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.hw.config.TestFileNameProvider;
+import ru.otus.hw.config.FileNameTestProvider;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.exceptions.QuestionReadException;
 
@@ -14,13 +14,13 @@ import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CsvQuestionDaoTest {
 
     @Mock
-    private TestFileNameProvider fileNameProvider;
+    private FileNameTestProvider fileNameProvider;
 
     @InjectMocks
     private CsvQuestionDao csvQuestionDao;

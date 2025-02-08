@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="ioService" class="ru.otus.hw.service.impl.StreamsIOServiceImpl">
+    <bean id="ioService" class="ru.otus.hw.service.impl.ServiceStreamsIOImpl">
         <constructor-arg index="0">
             <util:constant static-field="java.lang.System.out"/>
         </constructor-arg>
@@ -20,12 +20,12 @@
         <constructor-arg name="fileNameProvider" ref="fileNameProvider"/>
     </bean>
 
-    <bean id="testService" class="ru.otus.hw.service.impl.TestServiceImpl">
+    <bean id="testService" class="ru.otus.hw.service.impl.ServiceTestImpl">
         <constructor-arg name="ioService" ref="ioService"/>
         <constructor-arg name="questionDao" ref="questionDao"/>
     </bean>
 
-    <bean id="testRunner" class="ru.otus.hw.service.impl.TestRunnerServiceImpl">
+    <bean id="testRunner" class="ru.otus.hw.service.impl.ServiceTestRunnerImpl">
         <constructor-arg name="testService" ref="testService"/>
     </bean>
 

@@ -3,7 +3,6 @@ package ru.otus.hw.util;
 import org.junit.jupiter.api.Test;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
-import ru.otus.hw.util.QuestionStringFormatter;
 
 import java.util.List;
 
@@ -18,7 +17,8 @@ class QuestionStringFormatterTest {
                         new Answer("Coffee", false))
         );
 
-        String expected = "Q: What is Java?\nOptions: - Programming Language\n- Coffee\n";
+        String expected = "Q: What is Java?" + System.lineSeparator() +
+                "Options: - Programming Language" + System.lineSeparator() + "- Coffee" + System.lineSeparator();
         String actual = QuestionStringFormatter.formatQuestion(question);
 
         assertEquals(expected, actual);
@@ -28,7 +28,7 @@ class QuestionStringFormatterTest {
     void formatQuestion_ShouldHandleEmptyAnswersList() {
         Question question = new Question("What is Java?", List.of());
 
-        String expected = "Q: What is Java?\nOptions: \n";
+        String expected = "Q: What is Java?" + System.lineSeparator() + "Options: " + System.lineSeparator();
         String actual = QuestionStringFormatter.formatQuestion(question);
 
         assertEquals(expected, actual);
