@@ -1,6 +1,7 @@
 package ru.otus.hw.dao;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +32,7 @@ class CsvQuestionDaoTest {
     }
 
     @Test
+    @DisplayName("Тестирование успешной загрузки вопросов из CSV файла")
     void testFindAll_Success() {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream mockStream = classLoader.getResourceAsStream("test-questions.csv");
@@ -41,6 +43,7 @@ class CsvQuestionDaoTest {
     }
 
     @Test
+    @DisplayName("Тестирование обработки ошибки при отсутствии файла с вопросами")
     void testFindAll_FileNotFound() {
         when(fileNameProvider.getTestFileName()).thenReturn("non-existent.csv");
 

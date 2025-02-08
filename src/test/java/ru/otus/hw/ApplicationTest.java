@@ -1,5 +1,6 @@
 package ru.otus.hw;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.*;
 class ApplicationTest {
 
     @Test
+    @DisplayName("Проверка успешной загрузки контекста Spring")
     void contextShouldLoadSuccessfully() {
         ApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
         ServiceTestRunner testRunnerService = context.getBean(ServiceTestRunner.class);
@@ -19,6 +21,7 @@ class ApplicationTest {
     }
 
     @Test
+    @DisplayName("Проверка вызова метода run() у сервиса из контекста")
     void testRunnerServiceRunShouldBeCalled() {
         ServiceTestRunner testRunnerService = mock(ServiceTestRunner.class);
 

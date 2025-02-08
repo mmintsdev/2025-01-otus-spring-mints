@@ -1,11 +1,12 @@
 package ru.otus.hw.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
-import ru.otus.hw.service.StreamsIOService;
+import ru.otus.hw.service.IOService;
 import ru.otus.hw.util.QuestionStringFormatter;
 
 import java.util.List;
@@ -15,18 +16,19 @@ import static org.mockito.Mockito.*;
 
 class TestServiceImplTest {
 
-    private StreamsIOService ioService;
+    private IOService ioService;
     private QuestionDao questionDao;
     private ServiceTestImpl testService;
 
     @BeforeEach
     void setUp() {
-        ioService = mock(StreamsIOService.class);
+        ioService = mock(IOService.class);
         questionDao = mock(QuestionDao.class);
         testService = new ServiceTestImpl(ioService, questionDao);
     }
 
     @Test
+    @DisplayName("Тестирование: корректная печать вопросов, если они доступны")
     void executeTest_ShouldPrintQuestions_WhenQuestionsAvailable() {
         List<Question> questions = List.of(new Question("What is Java?", List.of(new Answer("Programming Language", true))));
 
@@ -42,6 +44,7 @@ class TestServiceImplTest {
     }
 
     @Test
+    @DisplayName("Тестирование: сообщение о отсутствии вопросов, если вопросов нет")
     void executeTest_ShouldPrintNoQuestionsMessage_WhenNoQuestionsAvailable() {
         when(questionDao.findAll()).thenReturn(List.of());
 
@@ -51,11 +54,7 @@ class TestServiceImplTest {
     }
 
     @Test
-    void testService_ShouldInitializeCorrectly() {
-        assertNotNull(testService);
-    }
-
-    @Test
+    @DisplayName("Тестирование: обработка null списка вопросов")
     void executeTest_ShouldHandleNullQuestionsList() {
         when(questionDao.findAll()).thenReturn(null);
 
@@ -63,4 +62,11 @@ class TestServiceImplTest {
 
         verify(ioService).printLine("No questions available.");
     }
+
+    @Test
+    @DisplayName("Тестирование: проверка правильной инициализации сервиса")
+    void testService_ShouldInitializeCorrectly() {
+        assertNotNull(testService);
+    }
+
 }

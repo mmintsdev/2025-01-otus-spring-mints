@@ -1,10 +1,10 @@
 package ru.otus.hw.service.impl;
 
-import ru.otus.hw.service.StreamsIOService;
+import ru.otus.hw.service.IOService;
 
 import java.io.PrintStream;
 
-public class ServiceStreamsIOImpl implements StreamsIOService {
+public class ServiceStreamsIOImpl implements IOService {
     private final PrintStream printStream;
 
     public ServiceStreamsIOImpl(PrintStream printStream) {
