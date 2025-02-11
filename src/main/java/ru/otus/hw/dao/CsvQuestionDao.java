@@ -47,7 +47,8 @@ public class CsvQuestionDao implements QuestionDao {
         List<QuestionDto> parsedList = new CsvToBeanBuilder<QuestionDto>(reader)
                 .withExceptionHandler(e -> {
                     throw new QuestionReadException(
-                            String.format("Error when reading from a string %d", e.getLineNumber()), e.getCause()
+                            String.format("Error when reading from line %d: %s", e.getLineNumber(), e.getMessage()),
+                            e  // Передаем оригинальное исключение как cause
                     );
                 })
                 .withMappingStrategy(strategy)

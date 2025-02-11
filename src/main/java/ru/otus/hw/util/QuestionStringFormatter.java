@@ -1,18 +1,17 @@
 package ru.otus.hw.util;
 
+import org.springframework.stereotype.Component;
 import ru.otus.hw.domain.Question;
 
 import java.util.stream.Collectors;
 
+@Component
 public class QuestionStringFormatter {
 
     private static final String QUESTION_TEMPLATE = "Q: %s" + System.lineSeparator() +
             "Options: %n%s" + System.lineSeparator();
 
-    private QuestionStringFormatter() {
-    }
-
-    public static String formatQuestion(Question question) {
+    public String formatQuestion(Question question) {
         if (question == null) {
             return "Invalid question";
         }

@@ -20,13 +20,16 @@
         <constructor-arg name="fileNameProvider" ref="fileNameProvider"/>
     </bean>
 
-    <bean id="testService" class="ru.otus.hw.service.impl.ServiceTestImpl">
+    <bean id="quizService" class="ru.otus.hw.service.impl.QuizServiceImpl">
         <constructor-arg name="ioService" ref="ioService"/>
         <constructor-arg name="questionDao" ref="questionDao"/>
+        <constructor-arg name="questionStringFormatter" ref="questionStringFormatter"/>
     </bean>
 
-    <bean id="testRunner" class="ru.otus.hw.service.impl.ServiceTestRunnerImpl">
-        <constructor-arg name="testService" ref="testService"/>
+    <bean id="quizRunner" class="ru.otus.hw.service.impl.ServiceQuizRunnerImpl">
+        <constructor-arg name="quizService" ref="quizService"/>
     </bean>
+
+    <bean id="questionStringFormatter" class="ru.otus.hw.util.QuestionStringFormatter"/>
 
 </beans>

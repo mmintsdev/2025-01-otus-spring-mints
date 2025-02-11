@@ -1,6 +1,6 @@
 package ru.otus.hw.service;
 
-public interface ServiceTest {
+public interface QuizService {
 
     void executeTest();
 }

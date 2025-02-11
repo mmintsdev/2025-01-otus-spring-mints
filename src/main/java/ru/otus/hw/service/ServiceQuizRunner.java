@@ -1,5 +1,5 @@
 package ru.otus.hw.service;
 
-public interface ServiceTestRunner {
+public interface ServiceQuizRunner {
     void run();
 }
