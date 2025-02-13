@@ -1,11 +1,9 @@
 package ru.otus.hw.util;
 
-import org.springframework.stereotype.Component;
 import ru.otus.hw.domain.Question;
 
 import java.util.stream.Collectors;
 
-@Component
 public class QuestionStringFormatter {
 
     private static final String QUESTION_TEMPLATE = "Q: %s" + System.lineSeparator() +
