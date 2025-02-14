@@ -1,23 +1,18 @@
-package ru.otus.hw.service.impl;
+package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
 import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.exceptions.NoQuestionsAvailableException;
-import ru.otus.hw.service.IOService;
-import ru.otus.hw.service.QuizService;
-import ru.otus.hw.util.QuestionStringFormatter;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class QuizServiceImpl implements QuizService {
+public class TestServiceImpl implements TestService {
 
     private final IOService ioService;
 
     private final QuestionDao questionDao;
-
-    private final QuestionStringFormatter questionStringFormatter;
 
     @Override
     public void executeTest() {
@@ -25,10 +20,14 @@ public class QuizServiceImpl implements QuizService {
         ioService.printFormattedLine("Please answer the questions below%n");
 
         List<Question> questions = questionDao.findAll();
+
         if (questions == null || questions.isEmpty()) {
             throw new NoQuestionsAvailableException("No questions available.");
         }
 
-        questions.forEach(question -> ioService.printLine(questionStringFormatter.formatQuestion(question)));
+        for (Question question : questions) {
+            ioService.printFormattedLine("Q: %s", question.text());
+            question.answers().forEach(answer -> ioService.printFormattedLine("- %s", answer.text()));
+        }
     }
 }

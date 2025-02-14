@@ -1,5 +1,5 @@
 package ru.otus.hw.config;
 
-public interface FileNameTestProvider {
+public interface TestFileNameProvider {
     String getTestFileName();
 }
