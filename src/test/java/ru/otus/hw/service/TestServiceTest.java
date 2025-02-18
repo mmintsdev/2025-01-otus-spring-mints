@@ -1,4 +1,4 @@
-package ru.otus.hw.service.impl;
+package ru.otus.hw.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,18 +11,14 @@ import ru.otus.hw.dao.QuestionDao;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.exceptions.NoQuestionsAvailableException;
-import ru.otus.hw.service.IOService;
-import ru.otus.hw.service.TestServiceImpl;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class TestServiceImplTest {
+class TestServiceTest {
 
     @Mock
     private IOService ioService;
