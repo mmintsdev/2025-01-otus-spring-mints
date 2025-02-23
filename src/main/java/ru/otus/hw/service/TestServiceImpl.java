@@ -1,12 +1,15 @@
 package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.otus.hw.dao.QuestionDao;
-import ru.otus.hw.domain.Question;
-import ru.otus.hw.exceptions.NoQuestionsAvailableException;
+import ru.otus.hw.domain.Answer;
+import ru.otus.hw.domain.Student;
+import ru.otus.hw.domain.TestResult;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
@@ -15,19 +18,36 @@ public class TestServiceImpl implements TestService {
     private final QuestionDao questionDao;
 
     @Override
-    public void executeTest() {
+    public TestResult executeTestFor(Student student) {
         ioService.printLine("");
         ioService.printFormattedLine("Please answer the questions below%n");
 
-        List<Question> questions = questionDao.findAll();
+        var questions = questionDao.findAll();
+        var testResult = new TestResult(student);
 
-        if (questions == null || questions.isEmpty()) {
-            throw new NoQuestionsAvailableException("No questions available.");
-        }
+        questions.forEach(question -> {
+            ioService.printLine(question.text());
+            var answersList = question.answers();
+            outputPossibleAnswers(answersList);
 
-        for (Question question : questions) {
-            ioService.printFormattedLine("Q: %s", question.text());
-            question.answers().forEach(answer -> ioService.printFormattedLine("- %s", answer.text()));
-        }
+            var chosenAnswerIndex = getChosenAnswerIndex(answersList);
+            boolean isAnswerValid = answersList.get(chosenAnswerIndex).isCorrect();
+
+            ioService.printLine(isAnswerValid ? "Correctly!\n" : "Wrong!\n");
+            testResult.applyAnswer(question, isAnswerValid);
+        });
+
+        return testResult;
+    }
+
+    private void outputPossibleAnswers(List<Answer> answersList) {
+        answersList.stream()
+                .map(answer -> answersList.indexOf(answer) + 1 + ". " + answer.text())
+                .forEach(ioService::printLine);
+    }
+
+    private int getChosenAnswerIndex(List<Answer> answersList) {
+        ioService.printLine("Enter the response number: ");
+        return ioService.readIntForRange(1, answersList.size(), "Incorrect input!") - 1;
     }
 }
