@@ -48,7 +48,6 @@ public class TestServiceImpl implements TestService {
 
     private int getChosenAnswerIndex(List<Answer> answersList) {
         ioService.printLine("Enter the response number: ");
-        int chosenAnswerIndex = ioService.readIntForRange(1, answersList.size(), "Incorrect input!") - 1;
-        return chosenAnswerIndex;
+        return ioService.readIntForRange(1, answersList.size(), "Incorrect input!") - 1;
     }
 }
