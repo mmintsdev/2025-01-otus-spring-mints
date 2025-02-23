@@ -2,10 +2,8 @@ package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
 import ru.otus.hw.dao.QuestionDao;
-import ru.otus.hw.domain.Question;
-import ru.otus.hw.exceptions.NoQuestionsAvailableException;
-
-import java.util.List;
+import ru.otus.hw.domain.Student;
+import ru.otus.hw.domain.TestResult;
 
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
@@ -15,19 +13,16 @@ public class TestServiceImpl implements TestService {
     private final QuestionDao questionDao;
 
     @Override
-    public void executeTest() {
+    public TestResult executeTestFor(Student student) {
         ioService.printLine("");
         ioService.printFormattedLine("Please answer the questions below%n");
+        var questions = questionDao.findAll();
+        var testResult = new TestResult(student);
 
-        List<Question> questions = questionDao.findAll();
-
-        if (questions == null || questions.isEmpty()) {
-            throw new NoQuestionsAvailableException("No questions available.");
+        for (var question : questions) {
+            var isAnswerValid = false; // Задать вопрос, получить ответ
+            testResult.applyAnswer(question, isAnswerValid);
         }
-
-        for (Question question : questions) {
-            ioService.printFormattedLine("Q: %s", question.text());
-            question.answers().forEach(answer -> ioService.printFormattedLine("- %s", answer.text()));
-        }
+        return testResult;
     }
 }
